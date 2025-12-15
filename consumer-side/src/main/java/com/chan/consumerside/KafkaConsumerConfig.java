@@ -32,8 +32,10 @@ public class KafkaConsumerConfig {
         config.put(ConsumerConfig.AUTO_OFFSET_RESET_CONFIG, "earliest");
         config.put(ConsumerConfig.KEY_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class);
         config.put(ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG,JacksonJsonDeserializer.class);
-        config.put(JacksonJsonDeserializer.TRUSTED_PACKAGES, "com.chan.consumerside.dto");
-        config.put(JacksonJsonDeserializer.VALUE_DEFAULT_TYPE, "order-event:com.chan.consumerside.dto.OrderEvent");
+        config.put(JacksonJsonDeserializer.TRUSTED_PACKAGES, "*");
+        config.put(JacksonJsonDeserializer.TYPE_MAPPINGS, "user-event:com.chan.consumerside.dto.UserEvent" +
+                ",order-event:com.chan.consumerside.dto.OrderEvent" +
+                ",payment-event:com.chan.consumerside.dto.PaymentEvent");
 
         return new DefaultKafkaConsumerFactory<>(config);
 
@@ -45,11 +47,7 @@ public class KafkaConsumerConfig {
     ) {
         ConcurrentKafkaListenerContainerFactory<String, Object> factory =
                 new ConcurrentKafkaListenerContainerFactory<>();
-        factory.setConsumerFactory(consumerFactory());
-        factory.setConcurrency(3);
-        factory.getContainerProperties().setAckMode(
-                org.springframework.kafka.listener.ContainerProperties.AckMode.MANUAL_IMMEDIATE
-        );
+        factory.setConsumerFactory(consumerFactory);
         return factory;
     }
 }

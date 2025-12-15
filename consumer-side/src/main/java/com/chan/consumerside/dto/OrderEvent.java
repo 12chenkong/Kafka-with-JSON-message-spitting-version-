@@ -1,6 +1,7 @@
 package com.chan.consumerside.dto;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -10,6 +11,7 @@ import java.time.LocalDateTime;
 @Getter
 @ToString
 @Setter
+@AllArgsConstructor
 public class OrderEvent {
 
     private String orderId;

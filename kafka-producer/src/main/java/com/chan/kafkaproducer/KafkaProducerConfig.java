@@ -30,6 +30,9 @@ public class KafkaProducerConfig {
         config.put(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, StringSerializer.class);
         config.put(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG, JacksonJsonSerializer.class);
         config.put(ProducerConfig.RETRIES_CONFIG, 3);
+        config.put(JacksonJsonSerializer.TYPE_MAPPINGS, "user-event:com.chan.kafkaproducer.dto.UserEvent" +
+                ",order-event:com.chan.kafkaproducer.dto.OrderEvent" +
+                ",payment-event:com.chan.kafkaproducer.dto.PaymentEvent");
         return new DefaultKafkaProducerFactory<>(config);
     }
 
